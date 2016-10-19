@@ -1,0 +1,27 @@
+<div class="workplus-approval">
+    <div class="container">
+        <div class="row approval-header">
+            <div class="col-sm-8">
+                <h3><img src="../../assets/images/logo.png" alt="...">审批管理后台</h3>
+            </div>
+            <div class="col-sm-4">
+                <a href class="btn btn-success pull-right m-t-md" role="button" ng-click="createTemplate()">保存</a>
+            </div>
+        </div>
+        <div class="row workplus-generator" ng-include="'app/drag_and_drop/nested/nested.html'"></div>
+    </div>
+</div>
+<div class="preloading" ng-show="flag.origin">
+    <div class="preloading-content preloading-saving" ng-show="flag.saving">
+        <p>保存中...</p>
+        <i class="fa fa-spinner fa-spin fa-lg"></i>
+    </div>
+    <div class="preloading-content preloading-saved" ng-show="flag.saved">
+        <p>保存成功</p>
+        <i class="fa fa-check fa-2x"></i>
+    </div>
+    <div class="preloading-content preloading-error" ng-show="flag.error">
+        <p>保存失败</p>
+        <i class="fa fa-close fa-2x"></i>
+    </div>
+</div>

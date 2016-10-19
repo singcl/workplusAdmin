@@ -1,0 +1,10 @@
+<form class="form-inline">
+  <div class="input-group">
+    <input type="text" class="form-control" ng-model="main.pages.query" placeholder="暂支持标题搜索..." ng-keypress="main.search.enterSearch($event)">
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-info" ng-click="main.search.searchMethod()">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+      </button>
+    </span>
+  </div>
+</form>

@@ -1,0 +1,66 @@
+params: {
+    "name": "请假",
+    "intro": "请假模板",
+    "icon": "xxx",
+    "controls": [
+        [{
+            "type": "select",
+            "require": true,
+            "title": "请假类型",
+            "default": [
+                { "optionValue": "请选择" },
+                { "optionValue": "病假" },
+                { "optionValue": "病假" },
+                { "optionValue": "病假" },
+                { "optionValue": "病假" }
+            ],
+            "value": "请选择"
+        }],
+        [{
+            "type": "datepicker",
+            "require": true,
+            "title": "开始时间",
+            "value": "2016/08/22"
+        }, {
+            "type": "datepicker",
+            "require": true,
+            "title": "结束时间",
+            "value": "2016/08/22"
+        }],
+        [{
+            "type": "text",
+            "require": true,
+            "title": "请假天数",
+            "default": "请输入请假天数（必填）",
+            "value": ""
+        }],
+        [{
+            "type": "textarea",
+            "require": true,
+            "title": "请假事由",
+            "default": "请输入请假事由（必填）",
+            "value": ""
+        }],
+        [{
+            "type": "add",
+            "require": false,
+            "title": "图片",
+            "default": {
+                "href": "",
+                "hrefText": "添加图",
+                "spanText": "（最多选择9张"
+
+            }
+        }, {
+            "type": "add",
+            "require": false,
+            "title": "审批人",
+            "default": {
+                "href": "",
+                "hrefText": "添加审批人",
+                "spanText": ""
+            }
+        }]
+    ],
+    "enable": true,
+}

@@ -1,0 +1,198 @@
+<!-- Markup for lists inside the dropzone. It's inside a seperate template
+     because it will be used recursively. The dnd-list directive enables
+     to drop elements into the referenced array. The dnd-draggable directive
+     makes an element draggable and will transfer the object that was
+     assigned to it. If an element was dragged away, you have to remove
+     it from the original list yourself using the dnd-moved attribute -->
+<script type="text/ng-template" id="list.html">
+    <ul dnd-list="list">
+        <li ng-repeat="item in list" dnd-draggable="item" dnd-effect-allowed="move" dnd-moved="list.splice($index, 1)" dnd-selected="models.selected = item" ng-class="{selected: models.selected === item}" ng-include="item[0].type + '.html'">
+        </li>
+    </ul>
+</script>
+<!-- This template is responsible for rendering a container element. It uses
+     the above list template to render each container column -->
+<script type="text/ng-template" id="container.html">
+    <div class="container-element box box-blue">
+        <h3>Container {{item.id}}</h3>
+        <div class="column" ng-repeat="list in item.columns" ng-include="'list.html'"></div>
+        <div class="clearfix"></div>
+    </div>
+</script>
+<!-- Template for a normal list item -->
+<script type="text/ng-template" id="item.html">
+    <div class="item">Item {{item.type}}</div>
+</script>
+<!-- Template for a input-text list item -->
+<script type="text/ng-template" id="text.html">
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">{{value.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-left m-b-xs text-muted">
+                {{value.default}}
+                <span ng-show="value.require">(必填)</span>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a select list item -->
+<script type="text/ng-template" id="select.html">
+    <!-- ng-repeat="(key, value)为通用写法，适用数组和对象。同时创建独立作用域 -->
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">{{value.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                请选择
+                <span ng-show="value.require">(必填)</span>
+                <i class="fa fa-chevron-right m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a datepicker list item -->
+<script type="text/ng-template" id="datepicker.html">
+    <div class="item form-group" ng-repeat="dateOption in item" ng-class="{'b-t':$odd}">
+        <label class="col-lg-4 text-left">{{dateOption.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                请选择
+                <span ng-show="dateOption.require">(必填)</span>
+                <i class="fa fa-chevron-right m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a textarea list item -->
+<script type="text/ng-template" id="textarea.html">
+    <div class="item form-group" ng-repeat="(key, value) in item" style="min-height: 90px;">
+        <label class="col-lg-4 text-left">{{value.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-left m-b-xs text-muted">
+                {{value.default}}
+                <span ng-show="value.require">(必填)</span>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a add list item -->
+<script type="text/ng-template" id="add.html">
+    <div class="item form-group" ng-repeat="addOption in item" ng-class="{'b-t':$odd}">
+        <label class="col-lg-4 text-left">{{addOption.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                <span ng-show="addOption.require">(必选)</span>
+                <i class="fa fa-lg m-l-xs" ng-class="{'fa-camera':$even, 'fa-user-plus': $odd}"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Sidebar -->
+<div class="col-lg-4">
+    <div class="toolbox box box-none box-padding">
+        <h3>控件</h3>
+        <ul>
+            <!-- The toolbox only allows to copy objects, not move it. After a new
+                 element was created, dnd-copied is invoked and we generate the next id -->
+            <li ng-repeat="item in models.templates" dnd-draggable="item" dnd-effect-allowed="copy" dnd-copied="">
+                <p>{{item[0].type | statusSwitch}} <i class="fa fa-check-square-o"></i></p>
+            </li>
+        </ul>
+    </div>
+    <div class="trashcan box box-none box-padding">
+        <!-- If you use [] as referenced list, the dropped elements will be lost -->
+        <!-- Good! The trashcan is what I wanted  -by singcl -->
+        <h3>回收站</h3>
+        <ul dnd-list="[]">
+            <li><img src="assets/images/trashcan.png"></li>
+        </ul>
+    </div>
+</div>
+<!-- Main area with dropzones and source code -->
+<div class="col-lg-5">
+    <div ng-repeat="(zone, list) in models.dropzones">
+        <div class="dropzone box box-none bg-none">
+            <!-- The dropzone also uses the list template -->
+            <!--  <h3 class="text-center">{{models.name}}</h3> -->
+            <div class="dropzone-iphone6">
+                <form class="form-horizontal" role="form">
+                    <div ng-include="'list.html'"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- What does the "view-source" code doing? -->
+    <div view-source="nested"></div>
+</div>
+<!-- Generated Models -->
+<div class="col-lg-3">
+    <div class="box box-none box-padding select-editor">
+        <form name="setting" novalidate="novalidate">
+            <!-- ui-bootstrap tab directive -->
+            <uib-tabset active justified="true">
+                <uib-tab index="0" heading="控件设置">
+                    <div ng-if="models.selected">
+                        <div ng-repeat="selectItem in models.selected" class="m-b">
+                            <!-- title -->
+                            <strong>标题 最多10个字</strong>
+                            <input type="text" name="detail-title" ng-model="selectItem.title" required class="form-control" style="margin-top: 5px" />
+                            <br>
+                            <!-- value -->
+                            <div>
+                                <strong>默认值</strong>
+                                <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
+                                <br>
+                            </div>
+                            <!-- default -->
+                            <div ng-include="selectItem.type + '_default.html'"></div>
+                            <!-- require -->
+                            <strong>验证</strong>
+                            <br>
+                            <label>
+                                <input type="checkbox" ng-model="selectItem.require">必填
+                            </label>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="审批设置">
+                    <strong>审批名称</strong> 最多10个字
+                    <input type="text" ng-model="models.name" class="form-control" style="margin-top: 5px;">
+                    <br>
+                    <strong>审批说明</strong> 最多100个字
+                    <textarea ng-model="models.intro" class="form-control" style="margin-top: 5px;"></textarea>
+                    <br>
+                </uib-tab>
+            </uib-tabset>
+        </form>
+    </div>
+    <!-- 生成的数据预览 -->
+    <h3>Generated Model</h3>
+    <pre>{{modelAsJson}}</pre>
+</div>
+<script type="text/ng-template" id="select_default.html">
+    <!-- default -->
+    <strong>选项 最多20项</strong>
+    <div ng-repeat="(key, value) in selectItem.default">
+        <input type="text" ng-model="value.optionValue" class="option-control" style="margin-top: 5px">
+        <a href class="action action-del" ng-click="selectItem.default.splice($index, 1)"><i class="fa fa-minus-circle fa-lg"></i></a>
+        <a href class="action action-add" ng-click="selectItem.default.splice(($index + 1), 0, {'optionValue': '请选择' })"><i class="fa fa-plus-circle fa-lg"></i></a>
+        <br>
+    </div>
+</script>
+<script type="text/ng-template" id="text_default.html">
+    <!-- default -->
+    <strong>提示文字</strong> 最多20个字
+    <input type="text" ng-model="selectItem.default" class="form-control" style="margin-top: 5px">
+    <br>
+</script>
+<script type="text/ng-template" id="textarea_default.html">
+    <!-- default -->
+    <strong>提示文字</strong> 最多20个字
+    <textarea type="text" ng-model="selectItem.default" class="form-control" style="margin-top: 5px"></textarea>
+    <br>
+</script>
+<script type="text/ng-template" id="add_default.html">
+    <!-- default -->
+</script>
+<script type="text/ng-template" id="datepicker_default.html">
+    <!-- default -->
+</script>

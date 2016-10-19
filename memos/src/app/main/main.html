@@ -1,0 +1,72 @@
+<!-- header -->
+<acme-navbar creation-date="main.creationDate"></acme-navbar>
+<!-- header -->
+<div class="container">
+    <!-- content -->
+    <div class="app-content app-content-body">
+        <div class="hbox hbox-auto-xs hbox-auto-sm">
+            <!-- search and create tpl-->
+            <div class="row">
+                <div class="col-sm-8 wrapper">
+                    <lighter-search></lighter-search>
+                </div>
+                <div class="col-sm-4 wrapper">
+                    <a href ui-sref="dragAndDrop" class="btn btn-success pull-right" role="button">创建模版</a>
+                </div>
+            </div>
+            <!-- /search and create tpl -->
+            <!-- list -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-info" role="alert" ng-show="main.searchFlag">
+                        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                        <strong>Message:</strong> 正在搜索中！
+                    </div>
+                    <div class="alert alert-success" role="alert" ng-show="main.noResult">
+                        <i class="fa fa-check-square fa-1x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                        <strong>Message:</strong> 暂无数据。
+                    </div>
+                    <table class="table table-hover table-drivers text-center" ng-show="!main.noResult">
+                        <thead>
+                            <tr>
+                                <th class="text-center" ng-repeat="column in main.columns" ng-if="!column.hidden" ng-click="main.sort.toggle(column)" ng-class="{'sortable':column.sortable !== false}">
+                                    {{column.label}}
+                                    <i ng-if="column.name === main.sort.column && main.sort.direction" class="glyphicon {{main.sort.direction|orderClass}}"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in main.items|filter:main.filter|orderBy:main.sort.column:main.sort.direction===-1">
+                                <td width="20%">
+                                    <!-- <a href ui-sref="topic({id:item.id})">{{item.title}}</a> -->
+                                    {{item.title}}
+                                </td>
+                                <td width="20%" class="text-left">
+                                    <p class="">{{item.controls[0][0].title}}:{{item.controls[0][0].value}}</p>
+                                    <p class="">{{item.controls[1][0].title}}:{{item.controls[1][0].value}}</p>
+                                    <p class="">{{item.controls[1][1].title}}:{{item.controls[1][1].value}}</p>
+                                    <p class="">{{item.controls[2][0].title}}:{{item.controls[2][0].value}}天</p>
+                                </td>
+                                <td width="20%">{{item.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td width="20%">
+                                    <p class="">{{item.approver[0].name}}</p>
+                                </td>
+                                <td width="20%">{{item.status | statusSwitch}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pager">
+                            <li><a href ng-click="main.pager.previousPage()" ng-show="main.pages.page">上一页</a></li>
+                            <li><a href ng-click="main.pager.nextPage()" ng-show="main.flag">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /list -->
+        </div>
+    </div>
+    <!-- /content -->
+</div>
