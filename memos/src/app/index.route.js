@@ -39,6 +39,13 @@
             controllerAs: 'main'
         })
 
+        .state('formManager', {
+            url: '/formManager',
+            templateUrl: 'app/form_manager/form_manager.html',
+            controller: 'FormManagerController',
+            controllerAs: 'formManager'
+        })
+
         .state('dragAndDrop', {
             url: '/dragAndDrop',
             templateUrl: 'app/drag_and_drop/drag_and_drop.html',

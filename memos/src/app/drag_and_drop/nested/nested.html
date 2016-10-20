@@ -13,31 +13,75 @@
 <!-- This template is responsible for rendering a container element. It uses
      the above list template to render each container column -->
 <script type="text/ng-template" id="container.html">
-    <div class="container-element box box-blue">
-        <h3>Container {{item.id}}</h3>
-        <div class="column" ng-repeat="list in item.columns" ng-include="'list.html'"></div>
-        <div class="clearfix"></div>
+    <h3>Container {{item.id}}</h3>
+    <div class="column" ng-repeat="list in item.columns" ng-include="'list.html'"></div>
+    <div class="clearfix"></div>
     </div>
 </script>
 <!-- Template for a normal list item -->
 <script type="text/ng-template" id="item.html">
     <div class="item">Item {{item.type}}</div>
 </script>
-<!-- Template for a input-text list item -->
+<!-- Template for a text list item -->
 <script type="text/ng-template" id="text.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
     <div class="item form-group" ng-repeat="(key, value) in item">
         <label class="col-lg-4 text-left">{{value.title}}</label>
         <div class="col-lg-8">
             <p class="text-left m-b-xs text-muted">
-                {{value.default}}
+                {{value.default.placeholder}}
                 <span ng-show="value.require">(必填)</span>
             </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a number list item -->
+<script type="text/ng-template" id="number.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">
+            {{value.title}}
+            <span ng-show="value.default.unit">({{value.default.unit}})</span>
+        </label>
+        <div class="col-lg-8">
+            <p class="text-left m-b-xs text-muted">
+                {{value.default.placeholder}}
+                <span ng-show="value.require">(必填)</span>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a amount list item -->
+<script type="text/ng-template" id="amount.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">
+            {{value.title}}
+            <span ng-show="value.default.unit">({{value.default.unit}})</span>
+        </label>
+        <div class="col-lg-8">
+            <p class="text-left m-b-xs text-muted">
+                {{value.default.placeholder}}
+                <span ng-show="value.require">(必填)</span>
+            </p>
+        </div>
+        <div class="col-lg-12 b-t m-b-n-sm m-t-sm" style="background-color: #f0eff4; padding-top: 5px;">
+            <p>大写：{{value.value | digitUppercase}}</p>
         </div>
     </div>
 </script>
 <!-- Template for a select list item -->
 <script type="text/ng-template" id="select.html">
     <!-- ng-repeat="(key, value)为通用写法，适用数组和对象。同时创建独立作用域 -->
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
     <div class="item form-group" ng-repeat="(key, value) in item">
         <label class="col-lg-4 text-left">{{value.title}}</label>
         <div class="col-lg-8">
@@ -49,8 +93,61 @@
         </div>
     </div>
 </script>
+<!-- Template for a radio list item -->
+<script type="text/ng-template" id="radio.html">
+    <!-- ng-repeat="(key, value)为通用写法，适用数组和对象。同时创建独立作用域 -->
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">{{value.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                请选择
+                <span ng-show="value.require">(必填)</span>
+                <i class="fa fa-chevron-right m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a checkbox list item -->
+<script type="text/ng-template" id="checkbox.html">
+    <!-- ng-repeat="(key, value)为通用写法，适用数组和对象。同时创建独立作用域 -->
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="(key, value) in item">
+        <label class="col-lg-4 text-left">{{value.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                请选择
+                <span ng-show="value.require">(必填)</span>
+                <i class="fa fa-chevron-right m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a singleDatepicker list item -->
+<script type="text/ng-template" id="singleDatepicker.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="singleDateOption in item">
+        <label class="col-lg-4 text-left">{{singleDateOption.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                请选择
+                <span ng-show="singleDateOption.require">(必填)</span>
+                <i class="fa fa-chevron-right m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
 <!-- Template for a datepicker list item -->
 <script type="text/ng-template" id="datepicker.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
     <div class="item form-group" ng-repeat="dateOption in item" ng-class="{'b-t':$odd}">
         <label class="col-lg-4 text-left">{{dateOption.title}}</label>
         <div class="col-lg-8">
@@ -64,24 +161,63 @@
 </script>
 <!-- Template for a textarea list item -->
 <script type="text/ng-template" id="textarea.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
     <div class="item form-group" ng-repeat="(key, value) in item" style="min-height: 90px;">
         <label class="col-lg-4 text-left">{{value.title}}</label>
         <div class="col-lg-8">
             <p class="text-left m-b-xs text-muted">
-                {{value.default}}
+                {{value.default.placeholder}}
                 <span ng-show="value.require">(必填)</span>
             </p>
         </div>
     </div>
 </script>
-<!-- Template for a add list item -->
-<script type="text/ng-template" id="add.html">
-    <div class="item form-group" ng-repeat="addOption in item" ng-class="{'b-t':$odd}">
-        <label class="col-lg-4 text-left">{{addOption.title}}</label>
+<!-- Template for a addPhotos list item -->
+<script type="text/ng-template" id="addPhotos.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="addPhotosOption in item">
+        <label class="col-lg-4 text-left">{{addPhotosOption.title}}</label>
         <div class="col-lg-8">
             <p class="text-right m-b-xs text-muted">
-                <span ng-show="addOption.require">(必选)</span>
-                <i class="fa fa-lg m-l-xs" ng-class="{'fa-camera':$even, 'fa-user-plus': $odd}"></i>
+                <span ng-show="addPhotosOption.default.maxLength">最多添加{{addPhotosOption.default.maxLength}}张</span>
+                <span ng-show="addPhotosOption.require">(必填)</span>
+                <i class="fa fa-camera fa-lg m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a addApprovers list item -->
+<script type="text/ng-template" id="addApprovers.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="addApproversOption in item">
+        <label class="col-lg-4 text-left">{{addApproversOption.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                <span ng-show="addApproversOption.default.maxLength">最多添加{{addApproversOption.default.maxLength}}人</span>
+                <span ng-show="addApproversOption.require">(必填)</span>
+                <i class="fa fa-user-plus fa-lg m-l-xs"></i>
+            </p>
+        </div>
+    </div>
+</script>
+<!-- Template for a addAttachments list item -->
+<script type="text/ng-template" id="addAttachments.html">
+    <span class="del-item" ng-click="list.splice($index, 1)">
+        <i class="fa fa-close fa-lg"></i>
+    </span>
+    <div class="item form-group" ng-repeat="addAttachmentsOption in item">
+        <label class="col-lg-4 text-left">{{addAttachmentsOption.title}}</label>
+        <div class="col-lg-8">
+            <p class="text-right m-b-xs text-muted">
+                <span ng-show="addAttachmentsOption.default.maxLength">最多添加{{addAttachmentsOption.default.maxLength}}个</span>
+                <span ng-show="addAttachmentsOption.require">(必填)</span>
+                <i class="fa fa-paperclip fa-lg m-l-xs"></i>
             </p>
         </div>
     </div>
@@ -98,14 +234,18 @@
             </li>
         </ul>
     </div>
+    
+    <!--
     <div class="trashcan box box-none box-padding">
-        <!-- If you use [] as referenced list, the dropped elements will be lost -->
-        <!-- Good! The trashcan is what I wanted  -by singcl -->
+        If you use [] as referenced list, the dropped elements will be lost 
+        Good! The trashcan is what I wanted  -by singcl
         <h3>回收站</h3>
         <ul dnd-list="[]">
             <li><img src="assets/images/trashcan.png"></li>
         </ul>
     </div>
+    -->
+
 </div>
 <!-- Main area with dropzones and source code -->
 <div class="col-lg-5">
@@ -136,12 +276,6 @@
                             <strong>标题 最多10个字</strong>
                             <input type="text" name="detail-title" ng-model="selectItem.title" required class="form-control" style="margin-top: 5px" />
                             <br>
-                            <!-- value -->
-                            <div>
-                                <strong>默认值</strong>
-                                <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
-                                <br>
-                            </div>
                             <!-- default -->
                             <div ng-include="selectItem.type + '_default.html'"></div>
                             <!-- require -->
@@ -169,6 +303,12 @@
     <pre>{{modelAsJson}}</pre>
 </div>
 <script type="text/ng-template" id="select_default.html">
+    <!-- value -->
+    <div>
+        <strong>默认值</strong>
+        <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
+        <br>
+    </div>
     <!-- default -->
     <strong>选项 最多20项</strong>
     <div ng-repeat="(key, value) in selectItem.default">
@@ -178,21 +318,98 @@
         <br>
     </div>
 </script>
+<script type="text/ng-template" id="radio_default.html">
+    <!-- value -->
+    <div>
+        <strong>默认值</strong>
+        <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
+        <br>
+    </div>
+    <!-- default -->
+    <strong>选项 最多20项</strong>
+    <div ng-repeat="(key, value) in selectItem.default">
+        <input type="text" ng-model="value.optionValue" class="option-control" style="margin-top: 5px">
+        <a href class="action action-del" ng-click="selectItem.default.splice($index, 1)"><i class="fa fa-minus-circle fa-lg"></i></a>
+        <a href class="action action-add" ng-click="selectItem.default.splice(($index + 1), 0, {'optionValue': '选项' })"><i class="fa fa-plus-circle fa-lg"></i></a>
+        <br>
+    </div>
+</script>
+<script type="text/ng-template" id="checkbox_default.html">
+    <!-- value -->
+    <div>
+        <strong>默认值</strong>
+        <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
+        <br>
+    </div>
+    <!-- default -->
+    <strong>选项 最多20项</strong>
+    <div ng-repeat="(key, value) in selectItem.default">
+        <input type="text" ng-model="value.optionValue" class="option-control" style="margin-top: 5px">
+        <a href class="action action-del" ng-click="selectItem.default.splice($index, 1)"><i class="fa fa-minus-circle fa-lg"></i></a>
+        <a href class="action action-add" ng-click="selectItem.default.splice(($index + 1), 0, {'optionValue': '选项' })"><i class="fa fa-plus-circle fa-lg"></i></a>
+        <br>
+    </div>
+</script>
 <script type="text/ng-template" id="text_default.html">
     <!-- default -->
     <strong>提示文字</strong> 最多20个字
-    <input type="text" ng-model="selectItem.default" class="form-control" style="margin-top: 5px">
+    <input type="text" ng-model="selectItem.default.placeholder" class="form-control" style="margin-top: 5px">
+    <br>
+    <strong>默认</strong>最大输入字数
+    <input type="text" ng-model="selectItem.default.maxLength" class="form-control" style="margin-top: 5px"></input>
     <br>
 </script>
 <script type="text/ng-template" id="textarea_default.html">
     <!-- default -->
     <strong>提示文字</strong> 最多20个字
-    <textarea type="text" ng-model="selectItem.default" class="form-control" style="margin-top: 5px"></textarea>
+    <textarea type="text" ng-model="selectItem.default.placeholder" class="form-control" style="margin-top: 5px"></textarea>
+    <br>
+    <strong>默认</strong>最大输入字数
+    <input type="text" ng-model="selectItem.default.maxLength" class="form-control" style="margin-top: 5px"></input>
     <br>
 </script>
-<script type="text/ng-template" id="add_default.html">
+<script type="text/ng-template" id="addPhotos_default.html">
+    <!-- default -->
+    <strong>默认</strong>最多添加张数
+    <input type="text" ng-model="selectItem.default.maxLength" class="form-control" style="margin-top: 5px"></input>
+</script>
+<script type="text/ng-template" id="addApprovers_default.html">
+    <!-- default -->
+    <strong>默认</strong>最多添加人数
+    <input type="text" ng-model="selectItem.default.maxLength" class="form-control" style="margin-top: 5px"></input>
+</script>
+<script type="text/ng-template" id="addAttachments_default.html">
+    <!-- default -->
+    <strong>默认</strong>最多添加附件
+    <input type="text" ng-model="selectItem.default.maxLength" class="form-control" style="margin-top: 5px"></input>
+</script>
+<script type="text/ng-template" id="singleDtepicker_default.html">
     <!-- default -->
 </script>
 <script type="text/ng-template" id="datepicker_default.html">
     <!-- default -->
+</script>
+<script type="text/ng-template" id="number_default.html">
+    <!-- default -->
+    <strong>提示文字</strong> 最多20个字
+    <input type="text" ng-model="selectItem.default.placeholder" class="form-control" style="margin-top: 5px">
+    <br>
+    <strong>单位</strong> 最多20个字
+    <input type="text" ng-model="selectItem.default.unit" class="form-control" style="margin-top: 5px">
+    <br>
+</script>
+<script type="text/ng-template" id="amount_default.html">
+    <!-- value -->
+    <div>
+        <strong>默认值</strong> 金额
+        <input type="text" ng-model="selectItem.value" class="form-control" style="margin-top: 5px" />
+        <br>
+    </div>
+    <!-- default -->
+    <strong>提示文字</strong> 最多20个字
+    <input type="text" ng-model="selectItem.default.placeholder" class="form-control" style="margin-top: 5px">
+    <br>
+    <strong>单位</strong> 最多20个字
+    <input type="text" ng-model="selectItem.default.unit" class="form-control" style="margin-top: 5px">
+    <br>
 </script>
