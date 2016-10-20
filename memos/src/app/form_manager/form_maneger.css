@@ -1,0 +1,121 @@
+
+/**approval stream list styles */
+
+/*********** approval-stream *****************/
+.approval-stream {
+	position: relative;
+	background-color: #fff;
+	border-radius: 3px;
+}
+
+/*********** approval-stream-head *****************/
+.approval-stream-head {
+	position: relative;
+	padding: 20px 0;
+}
+
+.approval-stream-head .btn-create {
+    float: right;
+    padding: 8px 30px;
+}
+
+.approval-stream-head h4 {
+    line-height: 1.0;
+}
+
+/*********** approval-stream-body *****************/
+.approval-stream-body .title {
+	padding: 15px;
+    background-color: #f0f3f4;
+    border-radius: 3px;
+}
+
+.approval-stream-body .stream-using {
+	
+}
+
+.approval-stream-body .stream-list-group {
+	list-style-type: none;
+	padding-left: 10px;
+}
+
+.approval-stream-body .stream-list-group > .stream-list-group-item {
+	padding: 10px 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] {
+	display: inline-block;
+	width: 33.3%;
+	min-height: 80px;
+	vertical-align: top;
+	padding: 5px;
+	padding-left: 15px;
+	margin-right: -3px;
+	border-right: 1px solid #e0e0e0;
+}
+
+.approval-stream-body .stream-list-group-item > [class^="item-"]:last-child {
+	border-right: none;
+}
+
+/*********** approval-stream-body > item-name *****************/
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] > [class^="name-"] {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: -3px; //消除inline-block间隙
+}
+
+.approval-stream-body .stream-list-group-item .name-picture {
+	width: 25%;
+}
+
+.approval-stream-body .name-picture img {
+	max-width: 52px;
+}
+
+.approval-stream-body .stream-list-group-item .name-details {
+	width: 75%;
+}
+
+.approval-stream-body .stream-list-group-item .name-details > [class^="name-"] {
+	margin-bottom: 5px;
+}
+
+.approval-stream-body .stream-list-group-item .name-details > .name-suit {
+	font-size: 12px;
+	color: #858585;
+}
+
+.approval-stream-body .stream-list-group-item .name-details > .name-update-time {
+	font-size: 12px;
+	color: #858585;
+}
+
+/*********** approval-stream-body > item-scale *****************/
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] [class^="scale-"] {
+	margin-bottom: 5px;
+	font-size: 12px;
+}
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] > .scale-all {
+	margin-top: 13px;
+}
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] > .scale-result {
+	color: #858585;
+}
+
+/*********** approval-stream-body > item-editor *****************/
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] > [class^="editor-"] {
+	font-size: 12px;
+	line-height: 5;
+}
+
+.approval-stream-body .stream-list-group-item > [class^="item-"] > [class^="editor-"] a {
+	padding-right: 10px;
+}
+
